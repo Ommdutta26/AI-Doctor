@@ -59,10 +59,8 @@ function MedicalVoiceAgent() {
   }
 
   const handleCallStart = () => {
-    console.log('Call started')
     setCallStarted(true)
     setStartLoading(false)
-
     const id = setInterval(() => {
       setCallTime(prev => prev + 1)
     }, 1000)
@@ -70,7 +68,6 @@ function MedicalVoiceAgent() {
   }
 
   const handleCallEnd = () => {
-    console.log('Call ended')
     setCallStarted(false)
     if (intervalId) clearInterval(intervalId)
     setIntervalId(null)
@@ -82,13 +79,11 @@ function MedicalVoiceAgent() {
       sessionDetails: sessionDetails,
       sessionId: sessionId
     })
-    console.log(result.data)
     return result.data
   }
 
   const handleMessage = (message: any) => {
     if (message.type === 'transcript') {
-      console.log(`${message.role}: ${message.transcript}`)
       if (message.transcriptType === 'partial') {
         setLiveTranscript(message.transcript)
         setCurrentRole(message.role)
@@ -107,29 +102,30 @@ function MedicalVoiceAgent() {
     const vapi = new Vapi('46c224f3-6688-4a0e-bbbc-5e8c012bbfbf')
     setVapiInstance(vapi)
 
-    const VapiAgentConfig = {
+    const VapiAgentConfig: any = {
       name: "AI Medical Voice Agent",
       firstMessage: "Hi there! I'm your AI medical assistant. I'm here to help you.",
       transcriber: {
-        provider: "assembly-ai",
-        language: "en"
+        provider: "assemblyai" as const,
+        language: "en-US"
       },
       voice: {
-        provider: "playht",
-        voiceId: sessionDetails?.selectedDoctor?.voiceId
+        provider: "playht" as const,
+        voiceId: sessionDetails.selectedDoctor.voiceId
       },
       model: {
-        provider: "openai",
+        provider: "openai" as const,
         model: "gpt-4",
         messages: [
           {
             role: "system",
-            content: sessionDetails?.selectedDoctor?.agentPrompt
+            content: sessionDetails.selectedDoctor.agentPrompt
           }
         ]
       }
     }
 
+    // Start Vapi with properly typed config
     vapi.start(VapiAgentConfig)
     vapi.on('call-start', handleCallStart)
     vapi.on('call-end', handleCallEnd)
@@ -167,8 +163,8 @@ function MedicalVoiceAgent() {
       {sessionDetails && (
         <div className='flex items-center flex-col mt-10'>
           <Image
-            src={sessionDetails?.selectedDoctor?.image}
-            alt={sessionDetails?.selectedDoctor?.specialist}
+            src={sessionDetails.selectedDoctor.image}
+            alt={sessionDetails.selectedDoctor.specialist}
             width={120}
             height={120}
             className='h-[100px] w-[100px] object-cover rounded-full'
