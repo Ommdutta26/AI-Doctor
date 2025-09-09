@@ -16,6 +16,8 @@ type Props = {
 }
 
 function ViewReportDialog({ record }: Props) {
+  const report: any = record?.report;
+
   return (
     <div>
       <Dialog>
@@ -49,15 +51,15 @@ function ViewReportDialog({ record }: Props) {
                 {/* Section: Chief Complaint */}
                 <div>
                   <h2 className="text-blue-600 text-lg font-semibold border-b border-blue-500 pb-1 mb-2">Chief Complaint</h2>
-                  <p className="text-sm">{record?.report?.chiefComplaint || "N/A"}</p>
+                  <p className="text-sm">{report?.chiefComplaint || "N/A"}</p>
                 </div>
 
                 {/* Section: Symptoms */}
                 <div>
                   <h2 className="text-blue-600 text-lg font-semibold border-b border-blue-500 pb-1 mb-2">Symptoms</h2>
                   <ul className="list-disc list-inside text-sm">
-                    {record?.report?.symptoms?.length > 0 ? (
-                      record.report.symptoms.map((symptom: string, idx: number) => (
+                    {report?.symptoms?.length > 0 ? (
+                      report.symptoms.map((symptom: string, idx: number) => (
                         <li key={idx}>{symptom}</li>
                       ))
                     ) : (
@@ -70,8 +72,8 @@ function ViewReportDialog({ record }: Props) {
                 <div>
                   <h2 className="text-blue-600 text-lg font-semibold border-b border-blue-500 pb-1 mb-2">Medications Mentioned</h2>
                   <ul className="list-disc list-inside text-sm">
-                    {record?.report?.medicationsMentioned?.length > 0 ? (
-                      record.report.medicationsMentioned.map((med: string, idx: number) => (
+                    {report?.medicationsMentioned?.length > 0 ? (
+                      report.medicationsMentioned.map((med: string, idx: number) => (
                         <li key={idx}>{med}</li>
                       ))
                     ) : (
@@ -84,8 +86,8 @@ function ViewReportDialog({ record }: Props) {
                 <div>
                   <h2 className="text-blue-600 text-lg font-semibold border-b border-blue-500 pb-1 mb-2">Recommendations</h2>
                   <ul className="list-disc list-inside text-sm">
-                    {record?.report?.recommendations?.length > 0 ? (
-                      record.report.recommendations.map((rec: string, idx: number) => (
+                    {report?.recommendations?.length > 0 ? (
+                      report.recommendations.map((rec: string, idx: number) => (
                         <li key={idx}>{rec}</li>
                       ))
                     ) : (
@@ -97,7 +99,7 @@ function ViewReportDialog({ record }: Props) {
                 {/* Section: Summary */}
                 <div>
                   <h2 className="text-blue-600 text-lg font-semibold border-b border-blue-500 pb-1 mb-2">Summary</h2>
-                  <p className="text-sm">{record?.report?.summary || "No summary available."}</p>
+                  <p className="text-sm">{report?.summary || "No summary available."}</p>
                 </div>
               </div>
             </DialogDescription>
