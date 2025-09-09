@@ -1,21 +1,20 @@
-import { text } from "drizzle-orm/gel-core";
-import { integer, json, pgTable, varchar } from "drizzle-orm/pg-core";
+import { text, integer, json, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
-  credits:integer()
+  credits: integer(),
 });
 
-
-export const SessionChartTable=pgTable('sessionChartTable',{
-  id:integer().primaryKey().generatedAlwaysAsIdentity(),
-  notes:text(),
-  sessionId:varchar().notNull(),
-  conversation:json(),
-  report:json(),
-  selectedDoctor:json(),
-  createdBy:varchar().references(()=>usersTable.email),
-  createdOn:varchar()
+export const SessionChartTable = pgTable("sessionChartTable", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  notes: text(),
+  sessionId: varchar().notNull(),
+  conversation: json(),
+  report: json(),
+  selectedDoctor: json(),
+  createdBy: varchar().references(() => usersTable.email),
+  createdOn: varchar(),
 });
+
